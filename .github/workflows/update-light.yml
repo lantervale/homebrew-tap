@@ -1,0 +1,36 @@
+# Keeps Casks/light.rb on light's latest release (.github/update-light.sh), every hour and by hand. It reads the
+# public release and pushes with this workflow's own token: no secret is needed.
+name: update-light
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-light
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: sigstore/cosign-installer@v4.1.3
+
+      - id: update
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: sh .github/update-light.sh
+
+      - if: steps.update.outputs.version
+        env:
+          VERSION: ${{ steps.update.outputs.version }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -am "light $VERSION"
+          git push
