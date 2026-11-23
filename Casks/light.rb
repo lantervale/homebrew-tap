@@ -1,9 +1,9 @@
 cask "light" do
   arch arm: "arm64", intel: "amd64"
 
-  version "0.2.3"
-  sha256 arm:   "4a484d3c0dc86a6dd1b17799a9180b83e3f17d174cff20a747d13d580b705bdc",
-         intel: "cfb384286751e3a1a80d711bc0453940060eff7c6eae1189c11163c38ba11774"
+  version "0.2.4"
+  sha256 arm:   "b7458bbbc6b5828ebeb83b21dbd769ae52ae5e8b415402bf37ec574ed0ede265",
+         intel: "5a01103a408ea2582de0a0fedeb5ec3355199adda48828b0774b9a96c307fa7e"
 
   url "https://github.com/lantervale/light/releases/download/v#{version}/light_#{version}_darwin_#{arch}.dmg"
   name "light"
